@@ -1,0 +1,18 @@
+Package: AreaGrowthRex
+Title: Creates figures for comparing Stock Synthesis model runs used in GOA rex sole manuscript
+Version: 0.0.0.9000
+Authors@R: 
+    person("Carey", "McGilliard", , "carey.mcgilliard@gmail.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0001-5708-8283"))
+Description: This package creates the figures for a manuscript on the importance of accounting for spatial growth patterns in the absence of fishery age data. It takes results from several configurations of the Gulf of Alaska rex sole stock assessment (Stock Synthesis output) and creates figures comparing the model fits and outputs that are not currently available in r4ss. The figures are made using ggplot2s.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
+Imports: 
+    dplyr,
+    ggplot2,
+    magrittr,
+    r4ss,
+    tibble,
+    rlang

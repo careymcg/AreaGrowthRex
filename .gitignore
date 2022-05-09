@@ -2,3 +2,5 @@ ss/
 !ss/**/*.ss
 !ss/**/*.dat
 !ss/**s/*.ctl
+plots/
+.Rproj.user
