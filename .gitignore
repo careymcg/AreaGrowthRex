@@ -4,3 +4,4 @@ ss/
 !ss/**s/*.ctl
 plots/
 .Rproj.user
+*.Rproj
