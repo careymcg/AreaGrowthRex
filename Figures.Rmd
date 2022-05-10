@@ -11,26 +11,27 @@ library(AreaGrowthRex)
 ```
 
 ```{r readfiles, echo=FALSE}
- M1 = file.path("ss","OneArea_NoFages")
- M2 = file.path("ss","OneArea_Fages")
- M3 = file.path("ss","TwoArea_NoFages")
- M4 = file.path("ss","TwoArea_NoFages")
+M1 <- file.path("ss", "OneArea_NoFages")
+M2 <- file.path("ss", "OneArea_Fages")
+M3 <- file.path("ss", "TwoArea_NoFages")
+M4 <- file.path("ss", "TwoArea_NoFages")
 
- Mlab.1 = "OneArea_NoFages"
- Mlab.2 = "OneArea_Fages"
- Mlab.3 = "TwoArea_NoFages"
- Mlab.4 = "TwoArea_Fages"
+Mlab.1 <- "OneArea_NoFages"
+Mlab.2 <- "OneArea_Fages"
+Mlab.3 <- "TwoArea_NoFages"
+Mlab.4 <- "TwoArea_Fages"
 
- Mlabels = c(Mlab.1,Mlab.2,Mlab.3,Mlab.4)
- MasterList = r4ss::SSgetoutput(dirvec = c(M1,M2,M3,M4),getcomp =   TRUE,getcovar =TRUE) 
- SummaryList = r4ss::SSsummarize(MasterList)
- 
-
+Mlabels <- c(Mlab.1, Mlab.2, Mlab.3, Mlab.4)
+MasterList <- r4ss::SSgetoutput(dirvec = c(M1, M2, M3, M4), getcomp = TRUE, getcovar = TRUE)
+SummaryList <- r4ss::SSsummarize(MasterList)
 ```
 
 ```{r plot_length_compare, echo = FALSE}
-  plot_length_compare(ssruns=MasterList,narea=1,mnames = Mlabels)
-
+plot_length_compare(ssruns = MasterList, narea = 1, mnames = Mlabels)
 ```
 
 Figure 1. Fits (lines) to female and male length composition data aggregated by year (shaded regions) for the one area model without fishery ages included in model inputs (blue line) and with fishery ages included in model inputs (red line).
+
+```{r plot_length_compare, echo = FALSE}
+plot_age_compare(ssruns = MasterList, narea = 1, mnames = Mlabels)
+```
