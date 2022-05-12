@@ -25,21 +25,12 @@ plot_length_compare <- function(ssruns, narea, mnames,comptype = "length") {
       biglen.df <- rbind(biglen.df, ssruns[[imodel]]$lendbase)
     }
   }
+ # Filter by number of areas (different plots for 1 vs 2 area models)
+  biglen.t <- tibble::as_tibble(biglen.df)
+  } else { #if comptype =="ages"
+    biglen.t<-get_ages(ssruns,mnames)
   }
 
-  if (comptype == "age") {
-    for (imodel in 1:nmodel) {
-      ssruns[[imodel]]$agedbase$mname <- mnames[imodel] # make a variable out of the model name
-      if (imodel == 1) {
-        biglen.df <- ssruns[[1]]$agedbase
-      }
-      if (imodel > 1) {
-        biglen.df <- rbind(biglen.df, ssruns[[imodel]]$agedbase)
-      }
-    }
-  }
-  # Filter by number of areas (different plots for 1 vs 2 area models)
-  biglen.t <- tibble::as_tibble(biglen.df)
   # only the one-area model runs
   print("note this function currently only works for narea = 1")
   if (narea == 1) {
