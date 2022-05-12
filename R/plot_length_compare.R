@@ -3,16 +3,19 @@
 #'
 #' @param ssruns summary of outputs from a set of Stock Synthesis runs generated from using r4ss functions SSgetoutput followed by SSsummarize
 #' @param narea number of separate areas for plotting length distributions (makes separate plots by area for 2 area models)
-#' @param mnames model names for plot legend labels and
+#' @param mnames model names for plot legend labels
+#' @param comptype plot age or length comps? "age" "length" are valid inputs
 #' @return
 #' @export
 #' @importFrom rlang .data
 #'
 #' @examples
-plot_length_compare <- function(ssruns, narea, mnames) {
+plot_length_compare <- function(ssruns, narea, mnames,comptype = "length") {
   # Make a big length data frame with all of the models included
   nmodel <- length(ssruns)
   biglen.df <- data.frame()
+
+  if (comptype == "length") {
   for (imodel in 1:nmodel) {
     ssruns[[imodel]]$lendbase$mname <- mnames[imodel] # make a variable out of the model name
     if (imodel == 1) {
@@ -22,7 +25,19 @@ plot_length_compare <- function(ssruns, narea, mnames) {
       biglen.df <- rbind(biglen.df, ssruns[[imodel]]$lendbase)
     }
   }
+  }
 
+  if (comptype == "age") {
+    for (imodel in 1:nmodel) {
+      ssruns[[imodel]]$agedbase$mname <- mnames[imodel] # make a variable out of the model name
+      if (imodel == 1) {
+        biglen.df <- ssruns[[1]]$agedbase
+      }
+      if (imodel > 1) {
+        biglen.df <- rbind(biglen.df, ssruns[[imodel]]$agedbase)
+      }
+    }
+  }
   # Filter by number of areas (different plots for 1 vs 2 area models)
   biglen.t <- tibble::as_tibble(biglen.df)
   # only the one-area model runs

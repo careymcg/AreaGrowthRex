@@ -4,14 +4,16 @@
 \alias{plot_length_compare}
 \title{Plot comparison of fits to aggregated length data}
 \usage{
-plot_length_compare(ssruns, narea, mnames)
+plot_length_compare(ssruns, narea, mnames, comptype = "length")
 }
 \arguments{
 \item{ssruns}{summary of outputs from a set of Stock Synthesis runs generated from using r4ss functions SSgetoutput followed by SSsummarize}
 
 \item{narea}{number of separate areas for plotting length distributions (makes separate plots by area for 2 area models)}
 
-\item{mnames}{model names for plot legend labels and}
+\item{mnames}{model names for plot legend labels}
+
+\item{comptype}{plot age or length comps? "age" "length" are valid inputs}
 }
 \value{
 
