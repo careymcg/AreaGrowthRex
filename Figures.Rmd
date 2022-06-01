@@ -28,26 +28,28 @@ SummaryList <- r4ss::SSsummarize(MasterList)
 
 Read in and plot individual runs to check and have a record
 
-```{r plotruns, echo=FALSE}
-MyOutput = r4ss::SS_output(dir = M1,covar = TRUE,forecast=TRUE)
-r4ss::SS_plots(replist = MyOutput,uncertainty=TRUE) #, plot = 2:24) 
+# ```{r plotruns, echo=FALSE}
+# MyOutput = r4ss::SS_output(dir = M1,covar = TRUE,forecast=TRUE)
+# r4ss::SS_plots(replist = MyOutput,uncertainty=TRUE) #, plot = 2:24) 
+# 
+# MyOutput = r4ss::SS_output(dir = M2,covar = TRUE,forecast=TRUE)
+# r4ss::SS_plots(replist = MyOutput,uncertainty=TRUE) #, plot = 2:24) 
+# 
+# MyOutput = r4ss::SS_output(dir = M3,covar = TRUE,forecast=TRUE)
+# r4ss::SS_plots(replist = MyOutput,uncertainty=TRUE) #, plot = 2:24) 
+# 
+# MyOutput = r4ss::SS_output(dir = M4,covar = TRUE,forecast=TRUE)
+# r4ss::SS_plots(replist = MyOutput,uncertainty=TRUE) #, plot = 2:24) 
+# ```
 
-MyOutput = r4ss::SS_output(dir = M2,covar = TRUE,forecast=TRUE)
-r4ss::SS_plots(replist = MyOutput,uncertainty=TRUE) #, plot = 2:24) 
-
-MyOutput = r4ss::SS_output(dir = M3,covar = TRUE,forecast=TRUE)
-r4ss::SS_plots(replist = MyOutput,uncertainty=TRUE) #, plot = 2:24) 
-
-MyOutput = r4ss::SS_output(dir = M4,covar = TRUE,forecast=TRUE)
-r4ss::SS_plots(replist = MyOutput,uncertainty=TRUE) #, plot = 2:24) 
-```
-
-```{r plot_length_compare, echo = FALSE}
+```{r plot lengths, echo = FALSE}
 plot_length_compare(ssruns = MasterList, narea = 1, mnames = Mlabels,comptype = "length")
 ```
 
 Figure 1. Fits (lines) to female and male length composition data aggregated by year (shaded regions) for the one area model without fishery ages included in model inputs (blue line) and with fishery ages included in model inputs (red line).
 
-```{r plot_length_compare, echo = FALSE}
+```{r plot ages, echo = FALSE}
 plot_length_compare(ssruns = MasterList, narea = 1, mnames = Mlabels,comptype = "age")
 ```
+
+Figure 2. Fits (lines) to female and male fishery age composition with data aggregated by year (shaded regions) for the one area model with fishery ages included in model inputs.
