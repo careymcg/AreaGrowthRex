@@ -43,13 +43,13 @@ Read in and plot individual runs to check and have a record (commented out curre
 ```
 
 ```{r plot lengths, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Figure 1. Fits (lines) to female and male length composition data aggregated by year (shaded regions) for the one area model without fishery ages included in model inputs (blue line) and with fishery ages included in model inputs (red line)."}
-plot_length_compare(ssruns = MasterList, narea = 1, mnames = Mlabels,comptype = "length")
+plot_comp_compare(ssruns = MasterList, narea = 1, mnames = Mlabels,comptype = "length")
 ```
 
 
 
 ```{r plot ages, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Figure 2. Fits (lines) to female and male fishery age composition with data aggregated by year (shaded regions) for the one area model with fishery ages included in model inputs."}
-plot_length_compare(ssruns = MasterList, narea = 1, mnames = Mlabels,comptype = "age")
+plot_comp_compare(ssruns = MasterList, narea = 1, mnames = Mlabels,comptype = "age")
 ```
 
 

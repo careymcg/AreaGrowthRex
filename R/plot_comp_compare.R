@@ -1,5 +1,5 @@
 
-#' Plot comparison of fits to aggregated length data
+#' Plot comparison of fits to aggregated comp data (lengths or ages)
 #'
 #' @param ssruns summary of outputs from a set of Stock Synthesis runs generated from using r4ss functions SSgetoutput followed by SSsummarize
 #' @param narea number of separate areas for plotting length distributions (makes separate plots by area for 2 area models)
@@ -9,23 +9,13 @@
 #' @importFrom rlang .data
 #'
 #' @examples
-plot_length_compare <- function(ssruns, narea, mnames,comptype = "length") {
+plot_comp_compare <- function(ssruns, narea, mnames,comptype = "length") {
   # Make a big length data frame with all of the models included
   nmodel <- length(ssruns)
   biglen.df <- data.frame()
 
   if (comptype == "length") {
-  for (imodel in 1:nmodel) {
-    ssruns[[imodel]]$lendbase$mname <- mnames[imodel] # make a variable out of the model name
-    if (imodel == 1) {
-      biglen.df <- ssruns[[1]]$lendbase
-    }
-    if (imodel > 1) {
-      biglen.df <- rbind(biglen.df, ssruns[[imodel]]$lendbase)
-    }
-  }
- # Filter by number of areas (different plots for 1 vs 2 area models)
-  biglen.t <- tibble::as_tibble(biglen.df)
+    biglen.t<-get_lengths(ssruns,mnames)
   } else { #if comptype =="ages"
     biglen.t<-get_ages(ssruns,mnames)
   }

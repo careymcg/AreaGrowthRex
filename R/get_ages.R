@@ -3,7 +3,6 @@
 #'
 #' @param ssruns the Stock Synthesis runs to include in the data frame
 #' @param mnames names of the Stock Synthesis runs
-#'
 #' @return
 #' @export
 #'

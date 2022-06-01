@@ -2,6 +2,7 @@
 
 export("%>%")
 export(get_ages)
-export(plot_length_compare)
+export(get_lengths)
+export(plot_comp_compare)
 importFrom(magrittr,"%>%")
 importFrom(rlang,.data)
