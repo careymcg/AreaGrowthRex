@@ -5,7 +5,6 @@
 #' @param narea number of separate areas for plotting length distributions (makes separate plots by area for 2 area models)
 #' @param mnames model names for plot legend labels
 #' @param comptype plot age or length comps? "age" "length" are valid inputs
-#' @return
 #' @export
 #' @importFrom rlang .data
 #'
@@ -58,8 +57,9 @@ plot_length_compare <- function(ssruns, narea, mnames,comptype = "length") {
   fleet.labs <- c("Fishery", "Survey")
   names(fleet.labs) <- c("1", "2")
   lfits <- ggplot2::ggplot(one5.t) +
-    ggplot2::geom_polygon(ggplot2::aes(x = .data$Bin, y = .data$Obs), fill = "lightblue", alpha = 0.4) +
-    ggplot2::geom_line(ggplot2::aes(x = .data$Bin, y = .data$Exp, color = .data$mname)) +
+    ggplot2::geom_bar(ggplot2::aes(x = .data$Bin, y = .data$Obs),stat='identity', fill = "lightblue", alpha = 0.4) +
+    #ggplot2::geom_polygon(ggplot2::aes(x = .data$Bin, y = .data$Obs), fill = "lightblue", alpha = 0.4) +
+    ggplot2::geom_line(data = one5.t,ggplot2::aes(x = .data$Bin, y = .data$Exp, color = .data$mname)) +
     ggplot2::facet_grid(Fleet ~ Sex, labeller = ggplot2::labeller(Sex = sex.labs, Fleet = fleet.labs)) +
     ggplot2::labs(x = "Length (cm)", y = "Proportion")
   lfits

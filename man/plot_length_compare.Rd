@@ -15,9 +15,6 @@ plot_length_compare(ssruns, narea, mnames, comptype = "length")
 
 \item{comptype}{plot age or length comps? "age" "length" are valid inputs}
 }
-\value{
-
-}
 \description{
 Plot comparison of fits to aggregated length data
 }

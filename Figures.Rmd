@@ -10,7 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(AreaGrowthRex)
 ```
 
-```{r readfiles, echo=FALSE}
+```{r readfiles, include = FALSE, message = FALSE, warning = FALSE}
 M1 <- file.path("ss", "OneArea_NoFages")
 M2 <- file.path("ss", "OneArea_Fages")
 M3 <- file.path("ss", "TwoArea_NoFages")
@@ -26,9 +26,9 @@ MasterList <- r4ss::SSgetoutput(dirvec = c(M1, M2, M3, M4), getcomp = TRUE, getc
 SummaryList <- r4ss::SSsummarize(MasterList)
 ```
 
-Read in and plot individual runs to check and have a record
+Read in and plot individual runs to check and have a record (commented out currently)
 
-# ```{r plotruns, echo=FALSE}
+```{r plotruns, include = FALSE, message = FALSE, warning = FALSE}
 # MyOutput = r4ss::SS_output(dir = M1,covar = TRUE,forecast=TRUE)
 # r4ss::SS_plots(replist = MyOutput,uncertainty=TRUE) #, plot = 2:24) 
 # 
@@ -40,16 +40,16 @@ Read in and plot individual runs to check and have a record
 # 
 # MyOutput = r4ss::SS_output(dir = M4,covar = TRUE,forecast=TRUE)
 # r4ss::SS_plots(replist = MyOutput,uncertainty=TRUE) #, plot = 2:24) 
-# ```
+```
 
-```{r plot lengths, echo = FALSE}
+```{r plot lengths, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Figure 1. Fits (lines) to female and male length composition data aggregated by year (shaded regions) for the one area model without fishery ages included in model inputs (blue line) and with fishery ages included in model inputs (red line)."}
 plot_length_compare(ssruns = MasterList, narea = 1, mnames = Mlabels,comptype = "length")
 ```
 
-Figure 1. Fits (lines) to female and male length composition data aggregated by year (shaded regions) for the one area model without fishery ages included in model inputs (blue line) and with fishery ages included in model inputs (red line).
 
-```{r plot ages, echo = FALSE}
+
+```{r plot ages, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Figure 2. Fits (lines) to female and male fishery age composition with data aggregated by year (shaded regions) for the one area model with fishery ages included in model inputs."}
 plot_length_compare(ssruns = MasterList, narea = 1, mnames = Mlabels,comptype = "age")
 ```
 
-Figure 2. Fits (lines) to female and male fishery age composition with data aggregated by year (shaded regions) for the one area model with fishery ages included in model inputs.
+
