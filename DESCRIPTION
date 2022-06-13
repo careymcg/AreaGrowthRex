@@ -15,4 +15,6 @@ Imports:
     magrittr,
     r4ss,
     tibble,
-    rlang
+    rlang,
+    viridis,
+    ggthemes
