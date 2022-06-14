@@ -20,6 +20,7 @@
 #' @importFrom ggplot2 geom_line
 #' @importFrom ggplot2 facet_grid
 #' @importFrom ggplot2 labeller
+#' @importFrom viridis scale_color_viridis
 #' @importFrom ggplot2 labs
 #'
 #' @examples
@@ -68,7 +69,7 @@ plot_comp_compare <- function(ssruns, narea, mnames,comptype = "length") {
   fleet.labs <- c("Fishery", "Survey")
   names(fleet.labs) <- c("1", "2")
   lfits <- ggplot(one5.t) +
-    geom_col(aes(x =  Bin, y =  Obs,color =  mname)) +
+    geom_col(aes(x =  Bin, y =  Obs,color = mname), position = "dodge", alpha = 1) + scale_color_viridis(discrete = TRUE) +
 #    geom_bar(aes(x =  Bin, y =  Obs,color =  mname),stat='identity', alpha = 0.4) +
     geom_line(data = one5.t,aes(x = as.numeric( Bin), y =  Exp, color =  mname)) +
     facet_grid(Fleet ~ Sex, labeller = labeller(Sex = sex.labs, Fleet = fleet.labs)) +
