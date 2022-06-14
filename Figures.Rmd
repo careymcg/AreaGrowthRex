@@ -42,8 +42,9 @@ Read in and plot individual runs to check and have a record (commented out curre
 # r4ss::SS_plots(replist = MyOutput,uncertainty=TRUE) #, plot = 2:24) 
 ```
 
-```{r plot lengths, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Figure 1. Fits (lines) to female and male length composition data aggregated by year (shaded regions) for the one area model without fishery ages included in model inputs (blue line) and with fishery ages included in model inputs (red line)."}
+```{r plot lengths, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Figure 1. Fits (lines) to female and male length composition data aggregated by year (shaded regions) for the one area model without fishery ages included in model inputs (green) and with fishery ages included in model inputs (blue)."}
 p<-plot_comp_compare(ssruns = MasterList, narea = 1, mnames = Mlabels,comptype = "length")
+
 p$combo
 p$noages
 p$ages

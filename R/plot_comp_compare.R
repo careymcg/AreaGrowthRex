@@ -20,13 +20,20 @@
 #' @importFrom ggplot2 geom_line
 #' @importFrom ggplot2 facet_grid
 #' @importFrom ggplot2 labeller
+#' @importFrom ggplot2 theme
+#' @importFrom ggplot2 scale_color_manual
 #' @importFrom viridis scale_color_viridis
+#' @importFrom ggplot2 scale_fill_discrete
 #' @importFrom ggplot2 labs
 #'
 #' @examples
 
 plot_comp_compare <- function(ssruns, narea, mnames,comptype = "length") {
   # Make a big length data frame with all of the models included
+  if (comptype == "length") {
+    binlabel<-"Lengths (cm)" }
+  else { binlabel <-"Ages"}
+
   nmodel <- length(ssruns)
   biglen.df <- data.frame()
 
@@ -69,27 +76,42 @@ plot_comp_compare <- function(ssruns, narea, mnames,comptype = "length") {
   fleet.labs <- c("Fishery", "Survey")
   names(fleet.labs) <- c("1", "2")
   lfits <- ggplot(one5.t) +
-    geom_col(aes(x =  Bin, y =  Obs,color = mname), position = "dodge", alpha = 1) + scale_color_viridis(discrete = TRUE) +
+    geom_col(aes(x =  Bin, y =  Obs,color = mname), position = "identity", alpha = 1) + scale_color_viridis(discrete = TRUE) +
 #    geom_bar(aes(x =  Bin, y =  Obs,color =  mname),stat='identity', alpha = 0.4) +
     geom_line(data = one5.t,aes(x = as.numeric( Bin), y =  Exp, color =  mname)) +
     facet_grid(Fleet ~ Sex, labeller = labeller(Sex = sex.labs, Fleet = fleet.labs)) +
     labs(x = "Bin", y = "Proportion")
   lfits
 
-  #carey's experiment with one mname
+
+  #combo: one mname at a time but on the same plots
+  lcombo <- ggplot(one5.t) +
+    geom_col(data = onetry.t,aes(x =  Bin, y =  Obs), fill = "#55C667FF", alpha = 0.6) +
+    geom_col(data = twotry.t,aes(x =  Bin, y =  Obs), fill = "#39568CFF",alpha = 0.6) +
+    #    geom_bar(aes(x =  Bin, y =  Obs,color =  mname),stat='identity', alpha = 0.4) +
+    geom_line(data = one5.t,aes(x = as.numeric( Bin), y =  Exp, color =  mname)) +
+    scale_color_manual(values=c('#39568CFF','#55C667FF')) +
+    facet_grid(Fleet ~ Sex, labeller = labeller(Sex = sex.labs, Fleet = fleet.labs)) +
+    labs(x = binlabel, y = "Proportion",color = "Model") +
+    #scale_fill_discrete(breaks = c("OneArea_NoFages","OneArea_Fages"), labels = c("One Area, No Fishery Ages", "One Area, Fishery Ages")) +
+    ggthemes::theme_few() + theme(legend.position = "bottom")
+  lcombo
+
+
+  #one mname at a time
   if (comptype == "length") {
  l1fits <- ggplot(onetry.t) +
     geom_bar(aes(x =Bin, y =  Obs),stat='identity', alpha = 0.4) +
     geom_line(data = onetry.t,aes(x = as.numeric( Bin), y =  Exp)) +
     facet_grid(Fleet ~ Sex, labeller = labeller(Sex = sex.labs, Fleet = fleet.labs)) +
-    labs(x = "Bin", y = "Proportion")
+    labs(x = binlabel, y = "Proportion")
   l1fits
 
     l2fits <- ggplot(twotry.t) +
       geom_bar(aes(x =Bin, y =  Obs),stat='identity', alpha = 0.4) +
       geom_line(data = twotry.t,aes(x = as.numeric( Bin), y =  Exp)) +
       facet_grid(Fleet ~ Sex, labeller = labeller(Sex = sex.labs, Fleet = fleet.labs)) +
-      labs(x = "Bin", y = "Proportion")
+      labs(x = binlabel, y = "Proportion")
     l2fits
   }
 
@@ -99,12 +121,13 @@ plot_comp_compare <- function(ssruns, narea, mnames,comptype = "length") {
   #   geom_bar(stat='identity', alpha = 0.4) +
   #   geom_line(aes(y = Exp ),stat='identity') +
   #   facet_grid(Fleet~Sex, labeller = labeller(Sex = sex.labs, Fleet = fleet.labs)) +
-  #   labs(x = "Length (cm)", y = "Proportion") +
+  #   labs(x = binlabel, y = "Proportion") +
   #   ggthemes::theme_few() ; lfits
 
   allplots<-list()
   allplots$combo<-lfits
   if (comptype == "length") {
+    allplots$combo<-lcombo
     allplots$noages<-l1fits
     allplots$ages <-l2fits
   }
