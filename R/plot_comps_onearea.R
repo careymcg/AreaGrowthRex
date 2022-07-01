@@ -1,5 +1,5 @@
 
-#' Plot comparison of fits to aggregated comp data (lengths or ages)
+#' Plot comparison of fits to aggregated comp data (lengths or ages) for one area models
 #'
 #' @param ssruns summary of outputs from a set of Stock Synthesis runs generated from using r4ss functions SSgetoutput followed by SSsummarize
 #' @param narea number of separate areas for plotting length distributions (makes separate plots by area for 2 area models)
@@ -28,7 +28,7 @@
 #'
 #' @examples
 
-plot_comp_compare <- function(ssruns, narea, mnames,comptype = "length") {
+plot_comps_onearea <- function(ssruns, narea, mnames,comptype = "length") {
   # Make a big length data frame with all of the models included
   if (comptype == "length") {
     binlabel<-"Lengths (cm)" }
@@ -46,7 +46,7 @@ plot_comp_compare <- function(ssruns, narea, mnames,comptype = "length") {
   # multiply observations and expectations by the adjusted sample size for each year and area and sex and fleet (put everything in terms of numbers)
   biglen1.t<-biglen.t %>% mutate(Obs=Obs*Nsamp_adj,Exp = Exp*Nsamp_adj)
   # only the one-area model runs
-  print("note this function currently only works for narea = 1")
+
   if (narea == 1) {
     one.t <- biglen1.t %>%
       filter(mname == "OneArea_NoFages" | mname == "OneArea_Fages") %>%
@@ -75,13 +75,15 @@ plot_comp_compare <- function(ssruns, narea, mnames,comptype = "length") {
   names(sex.labs) <- c("1", "2")
   fleet.labs <- c("Fishery", "Survey")
   names(fleet.labs) <- c("1", "2")
-  lfits <- ggplot(one5.t) +
-    geom_col(aes(x =  Bin, y =  Obs,color = mname), position = "identity", alpha = 1) + scale_color_viridis(discrete = TRUE) +
-#    geom_bar(aes(x =  Bin, y =  Obs,color =  mname),stat='identity', alpha = 0.4) +
-    geom_line(data = one5.t,aes(x = as.numeric( Bin), y =  Exp, color =  mname)) +
-    facet_grid(Fleet ~ Sex, labeller = labeller(Sex = sex.labs, Fleet = fleet.labs)) +
-    labs(x = "Bin", y = "Proportion")
-  lfits
+
+#Outdated:
+#   lfits <- ggplot(one5.t) +
+#     geom_col(aes(x =  Bin, y =  Obs,color = mname), position = "identity", alpha = 1) + scale_color_viridis(discrete = TRUE) +
+# #    geom_bar(aes(x =  Bin, y =  Obs,color =  mname),stat='identity', alpha = 0.4) +
+#     geom_line(data = one5.t,aes(x = as.numeric( Bin), y =  Exp, color =  mname)) +
+#     facet_grid(Fleet ~ Sex, labeller = labeller(Sex = sex.labs, Fleet = fleet.labs)) +
+#     labs(x = "Bin", y = "Proportion")
+#   lfits
 
 
   #combo: one mname at a time but on the same plots
@@ -98,7 +100,7 @@ plot_comp_compare <- function(ssruns, narea, mnames,comptype = "length") {
   lcombo
 
 
-  #one mname at a time
+  #one mname at a time (for debugging, but not included in the MS)
   if (comptype == "length") {
  l1fits <- ggplot(onetry.t) +
     geom_bar(aes(x =Bin, y =  Obs),stat='identity', alpha = 0.4) +
@@ -125,9 +127,9 @@ plot_comp_compare <- function(ssruns, narea, mnames,comptype = "length") {
   #   ggthemes::theme_few() ; lfits
 
   allplots<-list()
-  allplots$combo<-lfits
+  allplots$combo<-lcombo
   if (comptype == "length") {
-    allplots$combo<-lcombo
+    #allplots$combo<-lcombo
     allplots$noages<-l1fits
     allplots$ages <-l2fits
   }

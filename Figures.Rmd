@@ -26,8 +26,6 @@ MasterList <- r4ss::SSgetoutput(dirvec = c(M1, M2, M3, M4), getcomp = TRUE, getc
 #SummaryList <- r4ss::SSsummarize(MasterList)
 ```
 
-Read in and plot individual runs to check and have a record (commented out currently)
-
 ```{r plotruns, include = FALSE, message = FALSE, warning = FALSE}
 # MyOutput = r4ss::SS_output(dir = M1,covar = TRUE,forecast=TRUE)
 # r4ss::SS_plots(replist = MyOutput,uncertainty=TRUE) #, plot = 2:24) 
@@ -43,16 +41,16 @@ Read in and plot individual runs to check and have a record (commented out curre
 ```
 
 ```{r plot lengths, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Figure 1. Fits (lines) to female and male length composition data aggregated by year (shaded regions) for the one area model without fishery ages included in model inputs (green) and with fishery ages included in model inputs (blue)."}
-p<-plot_comp_compare(ssruns = MasterList, narea = 1, mnames = Mlabels,comptype = "length")
+p<-plot_comps_onearea(ssruns = MasterList, narea = 1, mnames = Mlabels,comptype = "length")
 
 p$combo
-p$noages
-p$ages
+#p$noages
+#p$ages
 ```
 
 
 ```{r plot ages, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Figure 2. Fits (lines) to female and male fishery age composition with data aggregated by year (shaded regions) for the one area model with fishery ages included in model inputs."}
-q<-plot_comp_compare(ssruns = MasterList, narea = 1, mnames = Mlabels,comptype = "age")
+q<-plot_comps_onearea(ssruns = MasterList, narea = 1, mnames = Mlabels,comptype = "age")
 q$combo
 ```
 
