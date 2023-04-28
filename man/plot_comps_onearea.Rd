@@ -4,7 +4,13 @@
 \alias{plot_comps_onearea}
 \title{Plot comparison of fits to aggregated comp data (lengths or ages) for one area models}
 \usage{
-plot_comps_onearea(ssruns, narea, mnames, comptype = "length")
+plot_comps_onearea(
+  ssruns,
+  narea,
+  mnames,
+  comptype = "length",
+  saveplots = TRUE
+)
 }
 \arguments{
 \item{ssruns}{summary of outputs from a set of Stock Synthesis runs generated from using r4ss functions SSgetoutput followed by SSsummarize}
@@ -14,6 +20,8 @@ plot_comps_onearea(ssruns, narea, mnames, comptype = "length")
 \item{mnames}{model names for plot legend labels}
 
 \item{comptype}{plot age or length comps? "age" "length" are valid inputs}
+
+\item{saveplots}{save each plot as a .png file}
 }
 \description{
 Plot comparison of fits to aggregated comp data (lengths or ages) for one area models

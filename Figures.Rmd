@@ -41,7 +41,7 @@ MasterList <- r4ss::SSgetoutput(dirvec = c(M1, M2, M3, M4), getcomp = TRUE, getc
 ```
 
 ```{r plot lengths, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Figure 1. Fits (lines) to female and male length composition data aggregated by year (shaded regions) for the one area model without fishery ages included in model inputs (green) and with fishery ages included in model inputs (blue)."}
-p<-plot_comps_onearea(ssruns = MasterList, narea = 1, mnames = Mlabels,comptype = "length")
+p<-plot_comps_onearea(ssruns = MasterList, narea = 1, mnames = Mlabels,comptype = "length", saveplots = TRUE)
 
 p$combo
 #p$noages
