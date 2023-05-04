@@ -11,9 +11,6 @@ get_lengths(ssruns, mnames)
 
 \item{mnames}{the names of the Stock Synthesis runs}
 }
-\value{
-
-}
 \description{
 Get length data and fits from ss model runs
 }

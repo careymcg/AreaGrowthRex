@@ -10,6 +10,14 @@ knitr::opts_chunk$set(echo = TRUE)
 library(AreaGrowthRex)
 ```
 
+```{r plotting themes, include=FALSE}
+.THEME <- theme(panel.grid.major.x = element_blank(), panel.grid.minor.y = element_blank(), panel.grid.major.y = element_blank() )
+.THEME <- .THEME + theme(text=element_text(size=18)) + theme(axis.title.x=element_text(size=24) ,axis.title.y=element_text(size=24, angle = 90,vjust = +2)) +
+theme(legend.position = "bottom")
+theme_set(.THEME)
+#.THEME <- .THEME + theme( panel.background = element_rect(fill="white"), #panel.border = element_rect(colour="black", fill=NA, size=1))
+```
+
 ```{r readfiles, include = FALSE, message = FALSE, warning = FALSE}
 M1 <- file.path("ss", "OneArea_NoFages")
 M2 <- file.path("ss", "OneArea_Fages")
@@ -54,4 +62,35 @@ q<-plot_comps_onearea(ssruns = MasterList, narea = 1, mnames = Mlabels,comptype 
 q$combo
 ```
 
+
+```{r plot growth, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Figure 3. Raw bottom trawl survey data length-at-age by area and sex, overlayed with mean length-at-age for each model (columns) and 90% asymptotic uncertainty intervals around the means (shaded areas). The Eastern GOA is shown in green and the Western-Central GOA is shown in blue."}
+g<-plot_growth(ssruns=MasterList,sslabels=Mlabels,savePlot = FALSE)
+g
+ggsave(filename = file.path("doc",paste0("Plot_Growth_AllModels.png")),device = "png",width = 10,height = 5)
+
+```
+```{r plot length comps two area models, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Figure 4. Fits (lines) to female and male fishery length composition with data aggregated by year (shaded regions) for the two-area area model."}
+q<-plot_comps_onearea(ssruns = MasterList, narea = 2, mnames = Mlabels,comptype = "length")
+q$combo
+```
+
+```{r plot ages two area models, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Figure 5. Fits (lines) to female and male fishery age composition with data aggregated by year (shaded regions) for the two-area area model with fishery ages included in model inputs."}
+q<-plot_comps_onearea(ssruns = MasterList, narea = 2, mnames = Mlabels,comptype = "age")
+q$combo
+```
+
+```{r get the projection data file for each model run, echo = FALSE, message = FALSE, warning = FALSE}
+
+
+get_projections(mydir = here(M1) ,MyOutput = MasterList[[1]],NagesProject = 20,FirstYr = 1982,LastYr = 2021,RecruitmentAge=3,species="Rex")
+
+get_projections(mydir = here(M2) ,MyOutput = MasterList[[2]],NagesProject = 20,FirstYr = 1982,LastYr = 2021,RecruitmentAge=3,species="Rex")
+
+get_projections(mydir = here(M3) ,MyOutput = MasterList[[3]],NagesProject = 20,FirstYr = 1982,LastYr = 2021,RecruitmentAge=3,species="Rex")
+
+get_projections(mydir = here(M4) ,MyOutput = MasterList[[4]],NagesProject = 20,FirstYr = 1982,LastYr = 2021,RecruitmentAge=3,species="Rex")
+
+
+
+```
 

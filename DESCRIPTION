@@ -8,7 +8,7 @@ Description: This package creates the figures for a manuscript on the importance
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
 Imports: 
     dplyr,
     ggplot2,
@@ -17,4 +17,6 @@ Imports:
     tibble,
     rlang,
     viridis,
-    ggthemes
+    ggthemes,
+    here,
+    stringr

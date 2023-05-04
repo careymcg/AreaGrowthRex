@@ -11,9 +11,6 @@ get_ages(ssruns, mnames)
 
 \item{mnames}{names of the Stock Synthesis runs}
 }
-\value{
-
-}
 \description{
 Get Age Data and Fits from SS Model Runs
 }

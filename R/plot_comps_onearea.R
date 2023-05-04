@@ -27,6 +27,7 @@
 #' @importFrom ggplot2 scale_fill_discrete
 #' @importFrom ggplot2 labs
 #' @importFrom ggplot2 ggsave
+#' @importFrom ggplot2 ggtitle
 #'
 #' @examples
 
@@ -53,6 +54,11 @@ plot_comps_onearea <- function(ssruns, narea, mnames,comptype = "length", savepl
     one.t <- biglen1.t %>%
       filter(mname == "OneArea_NoFages" | mname == "OneArea_Fages") %>%
       select(Yr, Fleet, Sex, Bin, Obs, Exp, mname, Area)
+  } else {
+    one.t <- biglen1.t %>%
+      filter(mname == "TwoArea_NoFages" | mname == "TwoArea_Fages") %>%
+      select(Yr, Fleet, Sex, Bin, Obs, Exp, mname, Area)
+
   }
 
 
@@ -81,7 +87,13 @@ plot_comps_onearea <- function(ssruns, narea, mnames,comptype = "length", savepl
   names(sex.labs) <- c("1", "2")
   fleet.labs <- c("Fishery", "Survey")
   names(fleet.labs) <- c("1", "2")
-
+  if (narea>1) {
+    area.labs<-c("Western-Central","Eastern")
+    names(area.labs)<-c("1","2")
+  } else {
+    area.labs<-c("All GOA")
+    names(area.labs)<-"1"
+  }
 
 #Outdated:
 #   lfits <- ggplot(one5.t) +
@@ -94,19 +106,34 @@ plot_comps_onearea <- function(ssruns, narea, mnames,comptype = "length", savepl
 
 
   #combo: one mname at a time but on the same plots
-  lcombo <- ggplot(one5.t) +
-    geom_col(data = onetry.t,aes(x =  Bin, y =  Obs), fill = "#55C667FF", alpha = 0.6) +
-    geom_col(data = twotry.t,aes(x =  Bin, y =  Obs), fill = "#39568CFF",alpha = 0.6) +
+  for (iarea in 1:narea) {
+    if (narea == 2 & iarea==2) {
+      print("no age compositions for the Eastern GOA")
+    } else {
+    one5a.t<-one5.t %>% filter(Area==iarea)
+    onetrya.t<-onetry.t %>% filter(Area==iarea)
+    twotrya.t<-twotry.t %>% filter(Area==iarea)
+  lcombo <- ggplot(one5a.t) +
+    geom_col(data = onetrya.t,aes(x =  Bin, y =  Obs), fill = "#55C667FF", alpha = 0.6) +
+    geom_col(data = twotrya.t,aes(x =  Bin, y =  Obs), fill = "#39568CFF",alpha = 0.6) +
     #    geom_bar(aes(x =  Bin, y =  Obs,color =  mname),stat='identity', alpha = 0.4) +
-    geom_line(data = one5.t,aes(x = as.numeric( Bin), y =  Exp, color =  mname)) +
+    geom_line(data = one5a.t,aes(x = as.numeric( Bin), y =  Exp, color =  mname)) +
     scale_color_manual(values=c('#39568CFF','#55C667FF')) +
-    facet_grid(Fleet ~ Sex, labeller = labeller(Sex = sex.labs, Fleet = fleet.labs)) +
-    labs(x = binlabel, y = "Proportion",color = "Model") +
-    #scale_fill_discrete(breaks = c("OneArea_NoFages","OneArea_Fages"), labels = c("One Area, No Fishery Ages", "One Area, Fishery Ages")) +
-    ggthemes::theme_few() + theme(legend.position = "bottom")
-  lcombo
-  ggsave(filename = file.path("doc",paste0("OneAreaComps_",comptype,".png")),device = "png")
+    labs(x = binlabel, y = "Proportion",color = "Model")
+    if (iarea==1) {
+      lcombo<-lcombo + facet_grid(Fleet ~ Sex, labeller = labeller(Sex = sex.labs, Fleet = fleet.labs))
+    } else {
+      lcombo<-lcombo + facet_grid(~ Sex, labeller = labeller(Sex = sex.labs))
+      print ("Reminder: no fishery data in the Eastern GOA")
+    }
 
+    if (narea>1) {
+      lcombo<-lcombo + ggtitle(area.labs[iarea])
+    }
+  lcombo
+  ggsave(filename = file.path("doc",paste0("Comps_",comptype,"Area",area.labs[iarea],".png")),device = "png",width = 10,height = 5)
+    }
+  }
 
   #one mname at a time (for debugging, but not included in the MS)
   if (comptype == "length") {
