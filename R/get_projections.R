@@ -26,5 +26,7 @@ get_projections<-function(mydir,MyOutput,NagesProject,FirstYr,LastYr,Recruitment
   }
 
   #could add my code to this for creating file structure for running projections
-
+  #could simply add a few lines to get the projection data files to the right place
+  #and to get other projection files for GP1 and GP2 within the right projection folders
+  #right now this is manually done.
 }

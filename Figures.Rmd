@@ -8,6 +8,8 @@ output:
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(AreaGrowthRex)
+library(ggplot2)
+library(here)
 ```
 
 ```{r plotting themes, include=FALSE}
@@ -79,7 +81,7 @@ q<-plot_comps_onearea(ssruns = MasterList, narea = 2, mnames = Mlabels,comptype 
 q$combo
 ```
 
-```{r get the projection data file for each model run, echo = FALSE, message = FALSE, warning = FALSE}
+```{r get the projection data file for each model run but right now organizing the projections manually within the projections folder, echo = FALSE, message = FALSE, warning = FALSE}
 
 
 get_projections(mydir = here(M1) ,MyOutput = MasterList[[1]],NagesProject = 20,FirstYr = 1982,LastYr = 2021,RecruitmentAge=3,species="Rex")
@@ -90,7 +92,16 @@ get_projections(mydir = here(M3) ,MyOutput = MasterList[[3]],NagesProject = 20,F
 
 get_projections(mydir = here(M4) ,MyOutput = MasterList[[4]],NagesProject = 20,FirstYr = 1982,LastYr = 2021,RecruitmentAge=3,species="Rex")
 
-
-
 ```
 
+```{r grab ref pts from projection results, echo = FALSE, message = FALSE, warning = FALSE, table.cap = "Table 1. F40% and catch corresponding to F40% for each model run. Only Western-Central GOA is shown for two area models as there is no fishery in the Eastern GOA. Projections assume future catch equal to the average of the most recent five years."}
+
+MS_Table_OneArea_NoFages<-get_refpts(ProjDir=here("projections","OneArea_NoFages","GrowthMorph1"),LastYr = 2021)
+
+MS_Table_OneArea_Fages<-get_refpts(ProjDir=here("projections","OneArea_Fages","GrowthMorph1"),LastYr = 2021)
+
+MS_Table_TwoArea_Fages<-get_refpts(ProjDir=here("projections","TwoArea_Fages","GrowthMorph2"),LastYr = 2021)
+
+MS_Table_TwoArea_NoFages<-get_refpts(ProjDir=here("projections","TwoArea_NoFages","GrowthMorph2"),LastYr = 2021)
+
+```
