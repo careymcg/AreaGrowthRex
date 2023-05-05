@@ -36,15 +36,16 @@ plot_growth<-function(ssruns=MasterList,sslabels=Mlabels,savePlot = TRUE) {
                      GrowthMorph = ssruns[[i]]$endgrowth$"Bio_Pattern",
                      Age = ssruns[[i]]$endgrowth$"Age_Beg",
                      Length = ssruns[[i]]$endgrowth$"Len_Beg",
-                     sd = ssruns[[i]]$endgrowth$"SD_Beg"*ssruns[[i]]$endgrowth$"Len_Beg")
+                     sd = ssruns[[i]]$endgrowth$"SD_Beg")
+                     #sd = ssruns[[i]]$endgrowth$"SD_Beg"*ssruns[[i]]$endgrowth$"Len_Beg")
 
     if (i==1) { ssgdata=ssgrowth}  else {
       ssgdata = rbind(ssgdata,ssgrowth)
     }
   }
 
-  ssgdata<-ssgdata %>% mutate(lb = Length/exp(2*sqrt(log(1+sd^2)/Length^2)),
-                              ub = Length*exp(2*sqrt(log(1+sd^2)/Length^2)))
+  ssgdata<-ssgdata %>% mutate(lb = Length/exp(2*sqrt(log(1+sd^2/Length^2))),
+                              ub = Length*exp(2*sqrt(log(1+sd^2/Length^2))))
 
 
   ssgdata$GrowthMorph[ssgdata$GrowthMorph==1]<-"Western-Central"

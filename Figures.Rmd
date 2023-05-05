@@ -10,6 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(AreaGrowthRex)
 library(ggplot2)
 library(here)
+library(ggpubr)
 ```
 
 ```{r plotting themes, include=FALSE}
@@ -80,6 +81,20 @@ q$combo
 q<-plot_comps_onearea(ssruns = MasterList, narea = 2, mnames = Mlabels,comptype = "age")
 q$combo
 ```
+```{r plot estimated pop dynamics, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Figure 6. Observed catches and estimated spawning biomass, recruitment, and fishing intensity (1-spawning potential ratio) for each of the four alternative models"}
+#need to make y-axis on ssb go to zero
+s<-plot_ssbs(ssruns=MasterList,mlabel=Mlabels,showlegend = FALSE)
+r<-plot_recs(ssruns = MasterList,mlabel = Mlabels,showlegend = TRUE)
+
+#ggarrange(r,s,labels = c("a","b"), nrow = 2, ncol = #1, common.legend = TRUE, legend="bottom")
+
+#rs
+#ggsave(filename = file.path(plot = rs,"doc",paste0("Compare_TimeSeries.png")),device = "png",width = 8.5,height = 11)
+```
+```{r plot selectivity overlaid on maturity, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Figure 7. Fishery and survey selectivity-at-age across models for males and females. Plots for females are overlaid on maturity-at-age"}
+
+
+```
 
 ```{r get the projection data file for each model run but right now organizing the projections manually within the projections folder, echo = FALSE, message = FALSE, warning = FALSE}
 
@@ -102,6 +117,10 @@ MS_Table_OneArea_Fages<-get_refpts(ProjDir=here("projections","OneArea_Fages","G
 
 MS_Table_TwoArea_Fages<-get_refpts(ProjDir=here("projections","TwoArea_Fages","GrowthMorph2"),LastYr = 2021)
 
+MS_Table_TwoArea_Fages_GP1<-get_refpts(ProjDir=here("projections","TwoArea_Fages","GrowthMorph1"),LastYr = 2021)
+
 MS_Table_TwoArea_NoFages<-get_refpts(ProjDir=here("projections","TwoArea_NoFages","GrowthMorph2"),LastYr = 2021)
+
+MS_Table_TwoArea_NoFages_GP1<-get_refpts(ProjDir=here("projections","TwoArea_NoFages","GrowthMorph1"),LastYr = 2021)
 
 ```
