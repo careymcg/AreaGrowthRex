@@ -137,17 +137,17 @@ plot_comps_onearea <- function(ssruns, narea, mnames,comptype = "length", savepl
 
   #one mname at a time (for debugging, but not included in the MS)
   if (comptype == "length") {
- l1fits <- ggplot(onetry.t) +
+ l1fits <- ggplot(onetrya.t) +
     geom_bar(aes(x =Bin, y =  Obs),stat='identity', alpha = 0.4) +
-    geom_line(data = onetry.t,aes(x = as.numeric( Bin), y =  Exp)) +
+    geom_line(data = onetrya.t,aes(x = as.numeric( Bin), y =  Exp)) +
     facet_grid(Fleet ~ Sex, labeller = labeller(Sex = sex.labs, Fleet = fleet.labs)) +
     labs(x = binlabel, y = "Proportion")
   l1fits
   ggsave(filename = file.path("doc",paste0("Aux_OneAreaNoFages_",comptype,".png")),device = "png")
 
-    l2fits <- ggplot(twotry.t) +
+    l2fits <- ggplot(twotrya.t) +
       geom_bar(aes(x =Bin, y =  Obs),stat='identity', alpha = 0.4) +
-      geom_line(data = twotry.t,aes(x = as.numeric( Bin), y =  Exp)) +
+      geom_line(data = twotrya.t,aes(x = as.numeric( Bin), y =  Exp)) +
       facet_grid(Fleet ~ Sex, labeller = labeller(Sex = sex.labs, Fleet = fleet.labs)) +
       labs(x = binlabel, y = "Proportion")
     l2fits

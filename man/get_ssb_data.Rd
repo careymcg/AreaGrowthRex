@@ -2,7 +2,7 @@
 % Please edit documentation in R/get_ssb_data.R
 \name{get_ssb_data}
 \alias{get_ssb_data}
-\title{Title}
+\title{Get the ssb output from ss models and aggregate}
 \usage{
 get_ssb_data(ssruns, mlabel)
 }
@@ -10,5 +10,5 @@ get_ssb_data(ssruns, mlabel)
 \item{ssruns}{}
 }
 \description{
-Title
+Get the ssb output from ss models and aggregate
 }

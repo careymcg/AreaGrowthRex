@@ -1,5 +1,5 @@
 
-#' Title
+#' Get the ssb output from ss models and aggregate
 #'
 #' @param ssruns
 #'

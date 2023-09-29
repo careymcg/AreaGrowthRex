@@ -34,21 +34,30 @@ Mlab.4 <- "TwoArea_Fages"
 
 Mlabels <- c(Mlab.1, Mlab.2, Mlab.3, Mlab.4)
 MasterList <- r4ss::SSgetoutput(dirvec = c(M1, M2, M3, M4), getcomp = TRUE, getcovar = TRUE)
-#SummaryList <- r4ss::SSsummarize(MasterList)
+
+OneAreaList <- r4ss::SSgetoutput(dirvec = c(M1, M2), getcomp = TRUE, getcovar = TRUE)
+
+TwoAreaList <- r4ss::SSgetoutput(dirvec = c(M3, M4), getcomp = TRUE, getcovar = TRUE)
+
+
+
+OneAreaSummaryList <- r4ss::SSsummarize(OneAreaList)
+TwoAreaSummaryList<- r4ss::SSsummarize(OneAreaList)
+SummaryList<-r4ss::SSsummarize(MasterList)
 ```
 
 ```{r plotruns, include = FALSE, message = FALSE, warning = FALSE}
 # MyOutput = r4ss::SS_output(dir = M1,covar = TRUE,forecast=TRUE)
-# r4ss::SS_plots(replist = MyOutput,uncertainty=TRUE) #, plot = 2:24) 
+# r4ss::SS_plots(replist = MyOutput,uncertainty=TRUE) #, #plot = 2:24) 
 # 
 # MyOutput = r4ss::SS_output(dir = M2,covar = TRUE,forecast=TRUE)
 # r4ss::SS_plots(replist = MyOutput,uncertainty=TRUE) #, plot = 2:24) 
 # 
-# MyOutput = r4ss::SS_output(dir = M3,covar = TRUE,forecast=TRUE)
-# r4ss::SS_plots(replist = MyOutput,uncertainty=TRUE) #, plot = 2:24) 
+ MyOutput = r4ss::SS_output(dir = M3,covar = TRUE,forecast=TRUE)
+ r4ss::SS_plots(replist = MyOutput,uncertainty=TRUE) #, plot = 2:24) 
 # 
-# MyOutput = r4ss::SS_output(dir = M4,covar = TRUE,forecast=TRUE)
-# r4ss::SS_plots(replist = MyOutput,uncertainty=TRUE) #, plot = 2:24) 
+ MyOutput = r4ss::SS_output(dir = M4,covar = TRUE,forecast=TRUE)
+ r4ss::SS_plots(replist = MyOutput,uncertainty=TRUE) #, plot = 2:24) 
 ```
 
 ```{r plot lengths, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Figure 1. Fits (lines) to female and male length composition data aggregated by year (shaded regions) for the one area model without fishery ages included in model inputs (green) and with fishery ages included in model inputs (blue)."}
@@ -85,13 +94,19 @@ q$combo
 #need to make y-axis on ssb go to zero
 s<-plot_ssbs(ssruns=MasterList,mlabel=Mlabels,showlegend = FALSE)
 r<-plot_recs(ssruns = MasterList,mlabel = Mlabels,showlegend = TRUE)
+#aspirational:
+#c<-plot_catches(ssruns = MasterList,mlabel = Mlabels,showlegend = TRUE)
+#f<-plot_one_minus_spr(ssruns = MasterList,mlabel = Mlabels,showlegend = TRUE)
 
-#ggarrange(r,s,labels = c("a","b"), nrow = 2, ncol = #1, common.legend = TRUE, legend="bottom")
+#some sort of aes mapping issue here
+#ggarrange(r,s,labels = c("a","b"), nrow = 2, ncol = 1, common.legend = TRUE, legend="bottom")
 
 #rs
 #ggsave(filename = file.path(plot = rs,"doc",paste0("Compare_TimeSeries.png")),device = "png",width = 8.5,height = 11)
 ```
 ```{r plot selectivity overlaid on maturity, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Figure 7. Fishery and survey selectivity-at-age across models for males and females. Plots for females are overlaid on maturity-at-age"}
+p<-plot_selex_maturity(ssruns=MasterList,mlabels=Mlabels) 
+ggsave(filename = file.path("doc",paste0("Plot_Selex_Maturity_AllModels.png")),device = "png",width = 10,height = 7)
 
 
 ```
@@ -124,3 +139,16 @@ MS_Table_TwoArea_NoFages<-get_refpts(ProjDir=here("projections","TwoArea_NoFages
 MS_Table_TwoArea_NoFages_GP1<-get_refpts(ProjDir=here("projections","TwoArea_NoFages","GrowthMorph1"),LastYr = 2021)
 
 ```
+```{r plot comparison of survey indices, echo = FALSE, message = FALSE, warning = FALSE}
+#Legends on bottom left
+SSplotComparisons(OneAreaSummaryList,print = TRUE,plotdir = here("doc","sscompare","oneareamodels"),legendlabels = c(M1,M2),legendloc = "bottomleft",sprtarg = 0.6,minbthresh = 0,btarg = 0,indexQlabel = F,indexUncertainty = T)
+
+SSplotComparisons(TwoAreaSummaryList,print = TRUE,plotdir = here("doc","sscompare","twoareamodels"),legendlabels = c(M3,M4),legendloc = "bottomleft",sprtarg = 0.6,minbthresh = 0,btarg = 0,indexQlabel = F,indexUncertainty = T)
+
+SSplotComparisons(SummaryList,print = TRUE,plotdir = here("doc","sscompare","allmodels"),legendlabels = c(M1,M2,M3,M4),legendloc = "bottomleft",sprtarg = 0.6,minbthresh = 0,btarg = 0,indexQlabel = F,indexUncertainty = T)
+
+
+
+
+```
+

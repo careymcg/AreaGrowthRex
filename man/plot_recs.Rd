@@ -4,7 +4,7 @@
 \alias{plot_recs}
 \title{Title}
 \usage{
-plot_recs(ssruns, mlabel)
+plot_recs(ssruns, mlabel, showlegend)
 }
 \arguments{
 \item{mlabel}{}

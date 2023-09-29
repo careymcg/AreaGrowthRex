@@ -64,5 +64,17 @@ plot_growth<-function(ssruns=MasterList,sslabels=Mlabels,savePlot = TRUE) {
   if (savePlot == TRUE) {
     ggsave(filename = file.path("doc",paste0("Plot_Growth_AllModels.png")),device = "png",width = 20,height = 10)
   }
+
+  #just the one area model no fages
+  originalssgdata<-ssgdata %>% filter(Model == sslabels[1])
+  p2<-ggplot()
+  p2<-p2 + geom_point(data=thedata,aes(x=Age, y=Length,color = factor(GrowthMorph))) + scale_color_manual(values = alpha(c('#39568CFF','#55C667FF'),0.05)) +
+    geom_line(data = originalssgdata,aes(x = Age,y = Length,color = factor(GrowthMorph)),linewidth = 1.2,alpha = 1) +
+    geom_ribbon(data = originalssgdata,aes(x = Age,ymin = lb,ymax = ub,fill = factor(GrowthMorph)),alpha = 0.25, show.legend = FALSE) + scale_fill_manual(values=c('#39568CFF','#55C667FF')) +
+    facet_grid(~Sex) + labs(y="Length (cm)",color = "Area")
+  if (savePlot == TRUE) {
+    ggsave(filename = file.path("doc",paste0("Plot_Growth_OneAreaNoFages.png")),device = "png",width = 20,height = 10)
+  }
+
   return(p)
 }
