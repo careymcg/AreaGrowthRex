@@ -25,13 +25,22 @@ get_rec_data<-function(ssruns,mlabel) {
       rec.df<-rbind(rec.df,rec[[i]])
     }
   }
-  rec.t<-tibble(rec.df)
+  rec.t<-tibble(rec.df) %>%
+    select(c(Label,Variable,Year,Value,StdDev,Model)) %>%
+    filter(str_detect(Year,"^\\s*[0-9]*\\s*$")) %>%
+    select(Model,Year,Variable,Value,StdDev) %>%
+    mutate(lb = Value/exp(2*sqrt(log(1+StdDev^2/Value^2))),
+           ub = Value*exp(2*sqrt(log(1+StdDev^2/Value^2))))
   #data_new <- data[!is.na(as.numeric(data$x1)), ]
-  rec.t <- rec.t[!is.na(as.numeric(rec.t$Year)),]
 
-  rec.t<-rec.t %>% select(Model,Year,Variable,Value,StdDev)
-  rec.t<-rec.t %>% mutate(lb = Value/exp(2*sqrt(log(1+StdDev^2/Value^2))),
-                          ub = Value*exp(2*sqrt(log(1+StdDev^2/Value^2))))
+
+  # ssb.t<-tibble(ssb.df) %>%
+  #   select(c(Label,Variable,Year,Value,StdDev,Model)) %>%
+  #   filter(str_detect(Year,"^\\s*[0-9]*\\s*$")) %>%
+  #   select(Model,Year,Variable,Value,StdDev) %>%
+  #   mutate(lb = Value/exp(2*sqrt(log(1+StdDev^2/Value^2))),
+  #          ub = Value*exp(2*sqrt(log(1+StdDev^2/Value^2))))
+
 
   #double lb=value(rec(i)/exp(2.*sqrt(log(1+square(rec.sd(i))/square(rec(i))))));
   #double ub=value(rec(i)*exp(2.*sqrt(log(1+square(rec.sd(i))/square(rec(i))))));

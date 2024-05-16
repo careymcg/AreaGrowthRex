@@ -16,8 +16,12 @@ get_ssb_data<-function(ssruns,mlabel) {
   ssb.df<-data.frame()
   for (i in 1:length(ssruns)) {
     alldata[[i]]<-ssruns[[i]]$derived_quants
-    ssb[[i]]<-alldata[[i]] %>% filter(str_detect(Label,"SSB_")) %>%
+
+    ssb[[i]]<-alldata[[i]] %>% filter(str_detect(Label,"SSB_")) %>%filter(Label!="B_MSY/SSB_unfished") %>%
       separate(Label,c("Variable","Year"),sep = "_",remove = FALSE)
+
+    #ssb[[i]]<-alldata[[i]] %>% filter(str_detect(Label,"SSB_")) %>%
+    #  separate(Label,c("Variable","Year"),sep = "_",remove = FALSE)
     ssb[[i]]$Model<-mlabel[i]
    if (i == 1) {
      ssb.df<-ssb[[i]]
@@ -25,12 +29,11 @@ get_ssb_data<-function(ssruns,mlabel) {
      ssb.df<-rbind(ssb.df,ssb[[i]])
     }
   }
-  ssb.t<-tibble(ssb.df)
-  #data_new <- data[!is.na(as.numeric(data$x1)), ]
-  ssb.t <- ssb.t[!is.na(as.numeric(ssb.t$Year)),]
-
-  ssb.t<-ssb.t %>% select(Model,Year,Variable,Value,StdDev)
-  ssb.t<-ssb.t %>% mutate(lb = Value/exp(2*sqrt(log(1+StdDev^2/Value^2))),
+  ssb.t<-tibble(ssb.df) %>%
+    select(c(Label,Variable,Year,Value,StdDev,Model)) %>%
+    filter(str_detect(Year,"^\\s*[0-9]*\\s*$")) %>%
+    select(Model,Year,Variable,Value,StdDev) %>%
+    mutate(lb = Value/exp(2*sqrt(log(1+StdDev^2/Value^2))),
                           ub = Value*exp(2*sqrt(log(1+StdDev^2/Value^2))))
 
   #double lb=value(SSB(i)/exp(2.*sqrt(log(1+square(SSB.sd(i))/square(SSB(i))))));

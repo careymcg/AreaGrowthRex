@@ -11,14 +11,25 @@ library(AreaGrowthRex)
 library(ggplot2)
 library(here)
 library(ggpubr)
+library(devtools)
+library(r4ss)
+library(patchwork)
 ```
 
 ```{r plotting themes, include=FALSE}
+
+# Presentation theme
 .THEME <- theme(panel.grid.major.x = element_blank(), panel.grid.minor.y = element_blank(), panel.grid.major.y = element_blank() )
 .THEME <- .THEME + theme(text=element_text(size=18)) + theme(axis.title.x=element_text(size=24) ,axis.title.y=element_text(size=24, angle = 90,vjust = +2)) +
 theme(legend.position = "bottom")
 theme_set(.THEME)
 #.THEME <- .THEME + theme( panel.background = element_rect(fill="white"), #panel.border = element_rect(colour="black", fill=NA, size=1))
+
+# Manuscript theme
+.THEME <- theme(panel.grid.major.x = element_blank(), panel.grid.minor.y = element_blank(), panel.grid.major.y = element_blank() )
+.THEME <- .THEME + theme(text=element_text(size=12)) + theme(axis.title.x=element_text(size=12) ,axis.title.y=element_text(size=12, angle = 90,vjust = +2)) +
+theme(legend.position = "bottom")
+theme_set(.THEME)
 ```
 
 ```{r readfiles, include = FALSE, message = FALSE, warning = FALSE}
@@ -53,11 +64,11 @@ SummaryList<-r4ss::SSsummarize(MasterList)
 # MyOutput = r4ss::SS_output(dir = M2,covar = TRUE,forecast=TRUE)
 # r4ss::SS_plots(replist = MyOutput,uncertainty=TRUE) #, plot = 2:24) 
 # 
- MyOutput = r4ss::SS_output(dir = M3,covar = TRUE,forecast=TRUE)
- r4ss::SS_plots(replist = MyOutput,uncertainty=TRUE) #, plot = 2:24) 
+# MyOutput = r4ss::SS_output(dir = M3,covar = TRUE,forecast=TRUE)
+# r4ss::SS_plots(replist = MyOutput,uncertainty=TRUE) #, plot = 2:24) 
 # 
- MyOutput = r4ss::SS_output(dir = M4,covar = TRUE,forecast=TRUE)
- r4ss::SS_plots(replist = MyOutput,uncertainty=TRUE) #, plot = 2:24) 
+# MyOutput = r4ss::SS_output(dir = M4,covar = TRUE,forecast=TRUE)
+# r4ss::SS_plots(replist = MyOutput,uncertainty=TRUE) #, plot = 2:24) 
 ```
 
 ```{r plot lengths, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Figure 1. Fits (lines) to female and male length composition data aggregated by year (shaded regions) for the one area model without fishery ages included in model inputs (green) and with fishery ages included in model inputs (blue)."}
@@ -92,8 +103,12 @@ q$combo
 ```
 ```{r plot estimated pop dynamics, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Figure 6. Observed catches and estimated spawning biomass, recruitment, and fishing intensity (1-spawning potential ratio) for each of the four alternative models"}
 #need to make y-axis on ssb go to zero
-s<-plot_ssbs(ssruns=MasterList,mlabel=Mlabels,showlegend = FALSE)
-r<-plot_recs(ssruns = MasterList,mlabel = Mlabels,showlegend = TRUE)
+ssbplot<-plot_ssbs(ssruns=MasterList,mlabel=Mlabels,showxlabel =   FALSE,showlegend = "none")
+recplot<-plot_recs(ssruns = MasterList,mlabel = Mlabels,showxlabel = TRUE,showlegend = "yes")
+
+bigfig<-(ssbplot/recplot)
+# my_plot_list<-list(ssbplot,recplot)
+# fig<-ggarrange(plotlist = c(ssbplot,recplot),label = c("a","b"),ncol = 1, nrow = 2)
 #aspirational:
 #c<-plot_catches(ssruns = MasterList,mlabel = Mlabels,showlegend = TRUE)
 #f<-plot_one_minus_spr(ssruns = MasterList,mlabel = Mlabels,showlegend = TRUE)
