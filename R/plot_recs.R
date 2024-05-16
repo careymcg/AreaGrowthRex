@@ -9,7 +9,8 @@
 #' @examples
 plot_recs<-function(ssruns,mlabel,showlegend,showxlabel) {
 
-  rec.t<-get_rec_data(ssruns,mlabel)
+  #rec.t<-get_rec_data(ssruns,mlabel)
+  rec.t<-get_timeseries_data(ssruns,mlabel,label_type = "Recr_")
   if (showxlabel == TRUE) {
     p<-plot_timeseries(data.t = rec.t,xlabel = "Year",ylabel = "Age 0 (thousands)",showlegend = showlegend)
   } else {

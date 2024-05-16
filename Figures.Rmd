@@ -106,9 +106,12 @@ q$combo
 ssbplot<-plot_ssbs(ssruns=MasterList,mlabel=Mlabels,showxlabel =   FALSE,showlegend = "none")
 recplot<-plot_recs(ssruns = MasterList,mlabel = Mlabels,showxlabel = TRUE,showlegend = "yes")
 
-bigfig<-(ssbplot/recplot)
-# my_plot_list<-list(ssbplot,recplot)
-# fig<-ggarrange(plotlist = c(ssbplot,recplot),label = c("a","b"),ncol = 1, nrow = 2)
+#CHECK DEFINITION OF SPRratio_ in DERIVED QUANTITIES! I think it's 1-SPR. Does Ian skip plotting the last year? Should I?
+fi_plot<-plot_one_minus_spr(ssruns = MasterList,mlabel = Mlabels,showxlabel = TRUE,showlegend = "yes")
+
+
+bigfig<-(ssbplot/recplot/fi_plot)
+
 #aspirational:
 #c<-plot_catches(ssruns = MasterList,mlabel = Mlabels,showlegend = TRUE)
 #f<-plot_one_minus_spr(ssruns = MasterList,mlabel = Mlabels,showlegend = TRUE)

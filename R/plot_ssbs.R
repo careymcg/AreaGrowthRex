@@ -11,7 +11,8 @@
 #' @examples
 plot_ssbs<-function(ssruns,mlabel,showlegend,showxlabel) {
 
-  ssb.t<-get_ssb_data(ssruns,mlabel)
+  #ssb.t<-get_ssb_data(ssruns,mlabel)
+  ssb.t<-get_timeseries_data(ssruns,mlabel,label_type = "SSB_")
   if (showxlabel == TRUE) {
     p<-plot_timeseries(data.t = ssb.t,xlabel = "Year",ylabel = "Spawning Biomass (t)",showlegend = showlegend)
   } else {
