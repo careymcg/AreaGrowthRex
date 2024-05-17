@@ -104,13 +104,15 @@ q$combo
 ```{r plot estimated pop dynamics, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Figure 6. Observed catches and estimated spawning biomass, recruitment, and fishing intensity (1-spawning potential ratio) for each of the four alternative models"}
 #need to make y-axis on ssb go to zero
 ssbplot<-plot_ssbs(ssruns=MasterList,mlabel=Mlabels,showxlabel =   FALSE,showlegend = "none")
-recplot<-plot_recs(ssruns = MasterList,mlabel = Mlabels,showxlabel = TRUE,showlegend = "yes")
+recplot<-plot_recs(ssruns = MasterList,mlabel = Mlabels,showxlabel = FALSE,showlegend = "none")
 
-#CHECK DEFINITION OF SPRratio_ in DERIVED QUANTITIES! I think it's 1-SPR. Does Ian skip plotting the last year? Should I?
-fi_plot<-plot_one_minus_spr(ssruns = MasterList,mlabel = Mlabels,showxlabel = TRUE,showlegend = "yes")
+#CHECK DEFINITION OF SPRratio_ in DERIVED QUANTITIES! I think it's 1-SPR. Does r4ss skip plotting the last year? Should I?
+fi_plot<-plot_one_minus_spr(ssruns = MasterList,mlabel = Mlabels,showxlabel = FALSE,showlegend = "yes")
 
+#stuff<-get_catch_data(ssruns = MasterList,mlabel = Mlabels)
+total_catch_plot<-plot_total_catch(ssruns = MasterList,mlabel = Mlabels,showxlabel = TRUE,showlegend = "none")
 
-bigfig<-(ssbplot/recplot/fi_plot)
+bigfig<-(total_catch_plot/ssbplot/recplot/fi_plot)
 
 #aspirational:
 #c<-plot_catches(ssruns = MasterList,mlabel = Mlabels,showlegend = TRUE)

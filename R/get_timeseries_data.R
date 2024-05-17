@@ -7,6 +7,10 @@
 #' @return
 #' @export
 #'
+#' @importFrom tidyr separate
+#' @importFrom stringr str_detect
+#' @import dplyr
+#'
 #' @examples
 #'  ssb.t<-get_timeseries_data(ssruns,mlabel,label_type = "SSB_")
 #'  rec.t<-get_timeseries_data(ssruns,mlabel,label_type = "Recr_")
