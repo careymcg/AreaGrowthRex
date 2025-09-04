@@ -9,14 +9,14 @@
 #' @export
 #'
 #' @examples
-plot_ssbs<-function(ssruns,mlabel,showlegend,showxlabel) {
+plot_ssbs<-function(ssruns,mlabel,showlegend,showxlabel,color_option = "viridis",color_direction= 1) {
 
   #ssb.t<-get_ssb_data(ssruns,mlabel)
   ssb.t<-get_timeseries_data(ssruns,mlabel,label_type = "SSB_")
   if (showxlabel == TRUE) {
-    p<-plot_timeseries(data.t = ssb.t,xlabel = "Year",ylabel = "Spawning Biomass (t)",showlegend = showlegend)
+    p<-plot_timeseries(data.t = ssb.t,xlabel = "Year",ylabel = "Spawning Biomass (t)",showlegend = showlegend,color_option = color_option,color_direction =color_direction)
   } else {
-    p<-plot_timeseries(data.t = ssb.t,xlabel = "",ylabel = "Spawning Biomass (t)",showlegend = showlegend)
+    p<-plot_timeseries(data.t = ssb.t,xlabel = "",ylabel = "Spawning Biomass (t)",showlegend = showlegend,color_option = color_option,color_direction = color_direction)
   }
 
 # # specify aesthetic inside scale_color_viridis_d()

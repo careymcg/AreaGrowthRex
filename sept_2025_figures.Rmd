@@ -1,0 +1,158 @@
+---
+title: "September 2025 Figures"
+output: 
+  word_document:
+    reference_docx: carey_template.docx
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(AreaGrowthRex)
+library(ggplot2)
+library(here)
+library(ggpubr)
+library(devtools)
+library(r4ss)
+library(patchwork)
+library(tidyr)
+```
+
+```{r plotting themes, include=FALSE}
+
+# Presentation theme
+.THEME <- theme(panel.grid.major.x = element_blank(), panel.grid.minor.y = element_blank(), panel.grid.major.y = element_blank() )
+.THEME <- .THEME + theme(text=element_text(size=18)) + theme(axis.title.x=element_text(size=24) ,axis.title.y=element_text(size=24, angle = 90,vjust = +2)) +
+theme(legend.position = "bottom")
+theme_set(.THEME)
+#.THEME <- .THEME + theme( panel.background = element_rect(fill="white"), #panel.border = element_rect(colour="black", fill=NA, size=1))
+
+# Manuscript theme
+.THEME <- theme(panel.grid.major.x = element_blank(), panel.grid.minor.y = element_blank(), panel.grid.major.y = element_blank() )
+.THEME <- .THEME + theme(text=element_text(size=12)) + theme(axis.title.x=element_text(size=12) ,axis.title.y=element_text(size=12, angle = 90,vjust = +2)) +
+theme(legend.position = "bottom")
+theme_set(.THEME)
+```
+
+```{r readfiles, include = FALSE, message = FALSE, warning = FALSE}
+run_dir<-"C:/Users/carey.mcgilliard/Work/FlatfishAssessments/2025/rex_cie_review/runs"
+sept_dir <-"C:/Users/carey.mcgilliard/Work/FlatfishAssessments/2025/runs"
+
+
+M8 <- file.path(run_dir,"run7_2021_new_data_and_sampler")
+M9 <- file.path(sept_dir,"run_14_asfor7_ageing_error")
+#M10 <- file.path(sept_dir,"run_15_asfor14_block_m_q")
+
+
+Mlab.8 <- "sampler survbio edits and new data"
+Mlab.9 <- "ageing error"
+#Mlab.10 <- "m_q_block"
+
+Mlabels3 <-c(Mlab.8,Mlab.9)
+
+MasterList3<-r4ss::SSgetoutput(dirvec = c(M8, M9),getcomp = TRUE, getcovar = TRUE)
+
+#SummaryList<-r4ss::SSsummarize(MasterList)
+```
+
+
+```{r plot estimated pop dynamics, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Figure 6. Observed catches and estimated spawning biomass, recruitment, and fishing intensity (1-spawning potential ratio) for each of the four alternative models with new data added"}
+#need to make y-axis on ssb go to zero
+ssbplot<-plot_ssbs(ssruns=MasterList3,mlabel=Mlabels3,showxlabel =   FALSE,showlegend = "none",color_option = "cividis",color_direction =-1)
+recplot<-plot_recs(ssruns = MasterList3,mlabel = Mlabels3,showxlabel = FALSE,showlegend = "none",color_option = "cividis",color_direction = -1)
+
+#CHECK DEFINITION OF SPRratio_ in DERIVED QUANTITIES! I think it's 1-SPR. Does r4ss skip plotting the last year? Should I?
+fi_plot<-plot_one_minus_spr(ssruns = MasterList3,mlabel = Mlabels3,showxlabel = FALSE,showlegend = "yes",color_option = "cividis",color_direction = -1)
+
+#stuff<-get_catch_data(ssruns = MasterList,mlabel = Mlabels)
+total_catch_plot<-plot_total_catch(ssruns = MasterList3,mlabel = Mlabels3,showxlabel = TRUE,showlegend = "none")
+
+bigfig<-(total_catch_plot/ssbplot/recplot/fi_plot)
+
+ggsave(filename = file.path(sept_dir,"comparison_plots",paste0("Compare_TimeSeries.png")),device = "png",width = 8.5,height = 11)
+```
+
+```{r plot growth, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Figure 3. Raw bottom trawl survey data length-at-age by area and sex, overlayed with mean length-at-age for each model (columns) and 90% asymptotic uncertainty intervals around the means (shaded areas). The Eastern GOA is shown in green and the Western-Central GOA is shown in blue."}
+g<-plot_growth(ssruns=MasterList3,sslabels=Mlabels3,savePlot = FALSE)
+g
+ggsave(filename = file.path(sept_dir,"comparison_plots",paste0("Plot_Growth_AllModels.png")),device = "png",width = 10,height = 5)
+
+```
+
+```{r plot selectivity overlaid on maturity, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Figure 7. Fishery and survey selectivity-at-age across models for males and females. Plots for females are overlaid on maturity-at-age"}
+p<-plot_selex_maturity(ssruns=MasterList3,mlabels=Mlabels3) 
+ggsave(filename = file.path(sept_dir,"comparison_plots",paste0("Plot_Selex_Maturity_AllModels.png")),device = "png",width = 10,height = 7)
+
+
+```
+
+
+```{r plot length comps two area models, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Figure 4. Fits (lines) to female and male fishery length composition with data aggregated by year (shaded regions) for the two-area area model."}
+q<-plot_comps_twoarea(ssruns = MasterList3, narea = 2, mnames = Mlabels3,comptype = "length")
+q$combo
+ggsave(filename = file.path(sept_dir,"comparison_plots",paste0("Agg_fits_length_comps_old_new.png")),device = "png",width = 10,height = 7)
+```
+
+```{r plot ages two area models, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Figure 5. Fits (lines) to female and male fishery age composition with data aggregated by year (shaded regions) for the two-area area model with fishery ages included in model inputs."}
+#age plots not working.
+q<-plot_comps_twoarea(ssruns = MasterList3, narea = 2, mnames = Mlabels3,comptype = "age")
+q$combo
+
+ggsave(filename = file.path(sept_dir,"comparison_plots",paste0("Agg_fits_age_comps.png")),device = "png",width = 10,height = 7)
+```
+
+```{r plot indices for two area models, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Figure 5. Fits (lines) to female and male fishery age composition with data aggregated by year (shaded regions) for the two-area area model with fishery ages included in model inputs."}
+
+p<-compare_index_fits(ssruns = MasterList3,mlabels=Mlabels3)
+ggsave(filename = file.path(sept_dir,"comparison_plots","index_fits.png"),device = "png",width = 10, height = 7)
+
+```
+```{r make some tables of parameters, echo = FALSE, message = FALSE, warning = FALSE}
+
+#get parameter tables:
+old_new_params<-compare_bio_pars(MasterList3,Mlabels3)
+write.csv(old_new_params,file.path(sept_dir,"comparison_plots","old_new_time_inv_params.csv"))
+
+all_params<-compare_bio_pars(MasterList3,Mlabels3)
+write.csv(all_params,file.path(sept_dir,"comparison_plots","all_time_inv_params.csv"))
+```
+```{r get the projection data file for each model run but right now organizing the projections manually within the projections folder, echo = FALSE, message = FALSE, warning = FALSE}
+
+
+get_projections(mydir = here(M1) ,MyOutput = MasterList[[1]],NagesProject = 20,FirstYr = 1982,LastYr = 2021,RecruitmentAge=3,species="Rex")
+
+get_projections(mydir = here(M2) ,MyOutput = MasterList[[2]],NagesProject = 20,FirstYr = 1982,LastYr = 2021,RecruitmentAge=3,species="Rex")
+
+get_projections(mydir = here(M3) ,MyOutput = MasterList[[3]],NagesProject = 20,FirstYr = 1982,LastYr = 2021,RecruitmentAge=3,species="Rex")
+
+get_projections(mydir = here(M4) ,MyOutput = MasterList[[4]],NagesProject = 20,FirstYr = 1982,LastYr = 2021,RecruitmentAge=3,species="Rex")
+
+```
+
+```{r grab ref pts from projection results, echo = FALSE, message = FALSE, warning = FALSE, table.cap = "Table 1. F40% and catch corresponding to F40% for each model run. Only Western-Central GOA is shown for two area models as there is no fishery in the Eastern GOA. Projections assume future catch equal to the average of the most recent five years."}
+
+MS_Table_OneArea_NoFages<-get_refpts(ProjDir=here("projections","OneArea_NoFages","GrowthMorph1"),LastYr = 2021)
+
+MS_Table_OneArea_Fages<-get_refpts(ProjDir=here("projections","OneArea_Fages","GrowthMorph1"),LastYr = 2021)
+
+MS_Table_TwoArea_Fages<-get_refpts(ProjDir=here("projections","TwoArea_Fages","GrowthMorph2"),LastYr = 2021)
+
+MS_Table_TwoArea_Fages_GP1<-get_refpts(ProjDir=here("projections","TwoArea_Fages","GrowthMorph1"),LastYr = 2021)
+
+MS_Table_TwoArea_NoFages<-get_refpts(ProjDir=here("projections","TwoArea_NoFages","GrowthMorph2"),LastYr = 2021)
+
+MS_Table_TwoArea_NoFages_GP1<-get_refpts(ProjDir=here("projections","TwoArea_NoFages","GrowthMorph1"),LastYr = 2021)
+
+```
+```{r plot comparison of survey indices, echo = FALSE, message = FALSE, warning = FALSE}
+#Legends on bottom left
+SSplotComparisons(OneAreaSummaryList,print = TRUE,plotdir = here("doc","sscompare","oneareamodels"),legendlabels = c(M1,M2),legendloc = "bottomleft",sprtarg = 0.6,minbthresh = 0,btarg = 0,indexQlabel = F,indexUncertainty = T)
+
+SSplotComparisons(TwoAreaSummaryList,print = TRUE,plotdir = here("doc","sscompare","twoareamodels"),legendlabels = c(M3,M4),legendloc = "bottomleft",sprtarg = 0.6,minbthresh = 0,btarg = 0,indexQlabel = F,indexUncertainty = T)
+
+SSplotComparisons(SummaryList,print = TRUE,plotdir = here("doc","sscompare","allmodels"),legendlabels = c(M1,M2,M3,M4),legendloc = "bottomleft",sprtarg = 0.6,minbthresh = 0,btarg = 0,indexQlabel = F,indexUncertainty = T)
+
+
+
+
+```
+

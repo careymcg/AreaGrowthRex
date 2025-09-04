@@ -34,6 +34,7 @@ theme_set(.THEME)
 
 ```{r readfiles, include = FALSE, message = FALSE, warning = FALSE}
 run_dir<-"C:/Users/carey.mcgilliard/Work/FlatfishAssessments/2025/rex_cie_review/runs"
+sept_dir <-"C:/Users/carey.mcgilliard/Work/FlatfishAssessments/2025/runs"
 
 M1 <- file.path(run_dir, "run7_2021_new_data_and_sampler")
 M2 <- file.path(run_dir, "run9_as_for_7_early_age_mat")
@@ -45,6 +46,9 @@ M6 <- file.path(run_dir,"run8_2021_sampler_no_new_data")
 M7 <- file.path(run_dir,"run13_2021_correct_survey_biomass_and_fishery_sampler")
 M8 <- file.path(run_dir,"run7_2021_new_data_and_sampler")
 
+M9 <- file.path(sept_dir,"run_14_asfor7_ageing_error")
+M10 <- file.path(sept_dir,"run_15_asfor14_block_m_q")
+
 Mlab.1 <- "new_data"
 Mlab.2 <- "early_maturity"
 Mlab.3 <- "late_maturity"
@@ -55,12 +59,19 @@ Mlab.6 <- "sampler"
 Mlab.7 <- "sampler and survbio edits"
 Mlab.8 <- "sampler survbio edits and new data"
 
+Mlab.9 <- "ageing error"
+Mlab.10 <- "m_q_block"
+
 Mlabels <- c(Mlab.1, Mlab.2, Mlab.3, Mlab.4)
 Mlabels2 <-c(Mlab.5, Mlab.6, Mlab.7, Mlab.8)
+Mlabels3 <-c(Mlab.8,Mlab.9,Mlab.10)
 
 MasterList <- r4ss::SSgetoutput(dirvec = c(M1, M2, M3, M4), getcomp = TRUE, getcovar = TRUE)
 
 MasterList2<-r4ss::SSgetoutput(dirvec = c(M5, M6, M7, M8),getcomp = TRUE, getcovar = TRUE)
+
+MasterList3<-r4ss::SSgetoutput(dirvec = c(M8, M9, M10),getcomp = TRUE, getcovar = TRUE)
+
 #SummaryList<-r4ss::SSsummarize(MasterList)
 ```
 

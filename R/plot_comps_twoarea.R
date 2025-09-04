@@ -117,7 +117,7 @@ plot_comps_twoarea <- function(ssruns, narea, mnames,comptype = "length", savepl
       for (imodel in 1:length(mnames)) {
         lcombo<-lcombo + geom_col(data = trylist_2[[imodel]],aes(x =  Bin, y =  Obs), fill = "#55C667FF", alpha = 0.6)
       }    #    geom_bar(aes(x =  Bin, y =  Obs,color =  mname),stat='identity', alpha = 0.4) +
-      lcombo<-lcombo + geom_line(data = one5a.t,aes(x = as.numeric( Bin), y =  Exp, color =  mname)) +
+      lcombo<-lcombo + geom_line(data = one5a.t,aes(x = as.numeric( Bin), y =  Exp, color =  mname),linewidth = 1.2) +
         scale_fill_brewer(palette = "Accent") +
         labs(x = binlabel, y = "Proportion",color = "Model")
       if (iarea==1) {
@@ -139,7 +139,7 @@ plot_comps_twoarea <- function(ssruns, narea, mnames,comptype = "length", savepl
   if (comptype == "length") {
     l1fits <- ggplot(trylist_2[[1]]) +
       geom_bar(aes(x =Bin, y =  Obs),stat='identity', alpha = 0.4) +
-      geom_line(data = trylist_2[[1]],aes(x = as.numeric( Bin), y =  Exp)) +
+      geom_line(data = trylist_2[[1]],aes(x = as.numeric( Bin), y =  Exp),linewidth = 1.2) +
       facet_grid(Fleet ~ Sex, labeller = labeller(Sex = sex.labs, Fleet = fleet.labs)) +
       labs(x = binlabel, y = "Proportion")
     l1fits
@@ -147,7 +147,7 @@ plot_comps_twoarea <- function(ssruns, narea, mnames,comptype = "length", savepl
 
     l2fits <- ggplot(trylist_2[[2]]) +
       geom_bar(aes(x =Bin, y =  Obs),stat='identity', alpha = 0.4) +
-      geom_line(data = trylist_2[[2]],aes(x = as.numeric( Bin), y =  Exp)) +
+      geom_line(data = trylist_2[[2]],aes(x = as.numeric( Bin), y =  Exp),linewidth = 1.2) +
       facet_grid(Fleet ~ Sex, labeller = labeller(Sex = sex.labs, Fleet = fleet.labs)) +
       labs(x = binlabel, y = "Proportion")
     l2fits

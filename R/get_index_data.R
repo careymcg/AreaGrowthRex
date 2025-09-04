@@ -10,7 +10,7 @@
 #' @examples
 get_index_data<-function(ssruns,mlabels) {
   index.t<-tibble()
-  fleets<-unique(ssruns[[i]]$cpue$Fleet)
+  #fleets<-unique(ssruns[[i]]$cpue$Fleet)
 
   for (i in 1:length(mlabels)) {
     index1<-ssruns[[i]]$cpue %>%

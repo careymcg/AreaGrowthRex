@@ -7,14 +7,14 @@
 #' @export
 #'
 #' @examples
-plot_recs<-function(ssruns,mlabel,showlegend,showxlabel) {
+plot_recs<-function(ssruns,mlabel,showlegend,showxlabel,color_option = viridis,color_direction = 1) {
 
   #rec.t<-get_rec_data(ssruns,mlabel)
   rec.t<-get_timeseries_data(ssruns,mlabel,label_type = "Recr_")
   if (showxlabel == TRUE) {
-    p<-plot_timeseries(data.t = rec.t,xlabel = "Year",ylabel = "Age 0 (thousands)",showlegend = showlegend)
+    p<-plot_timeseries(data.t = rec.t,xlabel = "Year",ylabel = "Age 0 (thousands)",showlegend = showlegend,color_option = color_option,color_direction = color_direction)
   } else {
-    p<-plot_timeseries(data.t = rec.t,xlabel = "",ylabel = "Age 0 (thousands)",showlegend = showlegend)
+    p<-plot_timeseries(data.t = rec.t,xlabel = "",ylabel = "Age 0 (thousands)",showlegend = showlegend,color_option= color_option,color_direction = color_direction)
   }
 
   # p<-ggplot(data = rec.t,aes(x = as.numeric(Year),y=Value)) +
