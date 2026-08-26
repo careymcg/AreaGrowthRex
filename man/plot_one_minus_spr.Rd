@@ -4,7 +4,14 @@
 \alias{plot_one_minus_spr}
 \title{Plot time series of fishing intensity in terms of one minus SPR}
 \usage{
-plot_one_minus_spr(ssruns, mlabel, showlegend, showxlabel)
+plot_one_minus_spr(
+  ssruns,
+  mlabel,
+  showlegend,
+  showxlabel,
+  color_option = "viridis",
+  color_direction = "color_direction"
+)
 }
 \arguments{
 \item{showxlabel}{}

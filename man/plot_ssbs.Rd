@@ -4,7 +4,14 @@
 \alias{plot_ssbs}
 \title{Plot ssb estimates and uncertainty across model runs}
 \usage{
-plot_ssbs(ssruns, mlabel, showlegend, showxlabel)
+plot_ssbs(
+  ssruns,
+  mlabel,
+  showlegend,
+  showxlabel,
+  color_option = "viridis",
+  color_direction = 1
+)
 }
 \arguments{
 \item{mlabel}{}

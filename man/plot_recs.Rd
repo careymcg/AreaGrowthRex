@@ -4,7 +4,14 @@
 \alias{plot_recs}
 \title{Title}
 \usage{
-plot_recs(ssruns, mlabel, showlegend, showxlabel)
+plot_recs(
+  ssruns,
+  mlabel,
+  showlegend,
+  showxlabel,
+  color_option = viridis,
+  color_direction = 1
+)
 }
 \arguments{
 \item{mlabel}{}

@@ -1,5 +1,10 @@
 #' Title
 #'
+#' @param ssruns list of ss3 runs from SSgetOutput
+#' @param sslabels list of label for the runs in ssruns
+#' @param thedata the raw specimen data for the species of interest
+#' @param savePlot equal to TRUE to save the plot within the function call
+#'
 #' @return
 #' @export
 #'
@@ -7,22 +12,30 @@
 #' @import ggplot2
 #' @import ggthemes
 #' @examples
-plot_growth<-function(ssruns=MasterList,sslabels=Mlabels,savePlot = TRUE) {
+#'plot_growth(ssruns=the_run_list,sslabels=the_run_labels,thedata= specimen_data, savePlot = FALSE)
+plot_growth<-function(ssruns=MasterList,sslabels=Mlabels,thedata,savePlot = TRUE) {
   #This dataset was pulled from AKFIN but a query exists in newsbss repo under Get_EBS_Survey_Length_Age_and_Plot.R and is current as of 2021
-  thedata<-read.csv(here::here("data","Survey_Age_Length.csv"))
+  #thedata<-read.csv(here::here("data","Survey_Age_Length.csv"))
 
-  #check that data is for unique specimens
-  thedata$ID<-paste0(thedata$SPECIMENID,"_",thedata$HAULJOIN)
-  if (length(unique(thedata$ID))==nrow(thedata)) {
-    print("unique IDs match number of rows")
-  } else { print("unique IDs do not match number of rows")}
+  # #check that data is for unique specimens
+  # thedata$ID<-paste0(thedata$SPECIMENID,"_",thedata$HAULJOIN)
+  # if (length(unique(thedata$ID))==nrow(thedata)) {
+  #   print("unique IDs match number of rows")
+  # } else { print("unique IDs do not match number of rows")}
 
-  thedata<-thedata %>% mutate(Length = LENGTH/10) %>% rename(Age=AGE,Sex = SEX) %>% filter(Sex!=3)
-  thedata$Sex[thedata$Sex==1]<-"Male"
-  thedata$Sex[thedata$Sex==2]<-"Female"
+  thedata<-thedata %>%
+    dplyr::mutate(Length = LENGTH_MM/10) %>%
+    dplyr::rename(Age=AGE) %>%
+    dplyr::filter(SEX!=3) %>%
+    dplyr::mutate(REGULATORY_AREA = sub("[- ].*", "", REGULATORY_AREA)) %>%
+    dplyr::mutate(Sex = case_when(SEX==1 ~ "Male",
+                                  SEX==2 ~ "Female",
+                                  TRUE ~ "Unsexed"),
+                  GrowthMorph = case_when(REGULATORY_AREA=="WESTERN" ~ "Western-Central",
+                                          REGULATORY_AREA == "CENTRAL" ~ "Western-Central",
+                                          REGULATORY_AREA == "EASTERN" ~ "Eastern")) %>%
+    dplyr::select(-c(SEX,REGULATORY_AREA))
 
-  thedata$GrowthMorph[thedata$GrowthMorph=="EASTERN"]<-"Eastern"
-  thedata$GrowthMorph[thedata$GrowthMorph=="NOT_EASTERN"]<-"Western-Central"
 
   #jitter data
   thedata$Age<-thedata$Age + runif(n =nrow(thedata),min = 0, max = 0.25)

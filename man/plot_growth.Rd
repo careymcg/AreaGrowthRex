@@ -4,8 +4,20 @@
 \alias{plot_growth}
 \title{Title}
 \usage{
-plot_growth(ssruns = MasterList, sslabels = Mlabels, savePlot = TRUE)
+plot_growth(ssruns = MasterList, sslabels = Mlabels, thedata, savePlot = TRUE)
+}
+\arguments{
+\item{ssruns}{list of ss3 runs from SSgetOutput}
+
+\item{sslabels}{list of label for the runs in ssruns}
+
+\item{thedata}{the raw specimen data for the species of interest}
+
+\item{savePlot}{equal to TRUE to save the plot within the function call}
 }
 \description{
 Title
+}
+\examples{
+plot_growth(ssruns=the_run_list,sslabels=the_run_labels,thedata= specimen_data, savePlot = FALSE)
 }

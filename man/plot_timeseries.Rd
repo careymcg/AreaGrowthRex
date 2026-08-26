@@ -4,7 +4,14 @@
 \alias{plot_timeseries}
 \title{Plot time-series results from multiple Stock Synthesis 3 assessment models with uncertainty}
 \usage{
-plot_timeseries(data.t, xlabel, ylabel, showlegend)
+plot_timeseries(
+  data.t,
+  xlabel,
+  ylabel,
+  showlegend,
+  color_option = "viridis",
+  color_direction = 1
+)
 }
 \arguments{
 \item{showlegend}{}

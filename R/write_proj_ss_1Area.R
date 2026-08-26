@@ -49,6 +49,9 @@ write_proj_ss_1Area<-function(data_file="Model1_Proj.dat",data=Models[[1]],NAGES
   #RecAge recruits FY to LY
   Rec_1<-as.numeric(data$natage[,(13+RecAge)][data$natage$Yr<=LY&data$natage$Yr>=FY&data$natage$Sex==1&data$natage$"Beg/Mid"=="B"]
                     +data$natage[,(13+RecAge)][data$natage$Yr<=LY&data$natage$Yr>=FY&data$natage$Sex==2&data$natage$"Beg/Mid"=="B"])
+
+  Rec_1 <- Rec_1/2 #changed to accommodate new version of spm.tpl that multiplies recruitment by 2 for 2-sex models only, where it did not used to.
+
   N_rec<-length(Rec_1)
 
   #SSB<-as.numeric(data$sprseries$SPB[data$natage$Yr<=LY&data$sprseries$Yr>=FY])

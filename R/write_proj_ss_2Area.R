@@ -18,7 +18,7 @@
 #'
 #' @examples
 write_proj_ss_2Area<-function(data_file="ForProjections.dat",data=replist,GrowthMorph = 1,area = 1,Narea = 2,Nmorph = 2,NAGES=30,FY=1978,LY=2017,RecAge = 1,species){
-  #Written by Steve Barbeaux and Carey McGilliard expanded
+  #Written by Steve Barbeaux and Carey McGilliard expanded. This is for 2-sex models.
   #2013
   #Example:
   #MyOutput =
@@ -73,7 +73,9 @@ write_proj_ss_2Area<-function(data_file="ForProjections.dat",data=replist,Growth
   ##age 1 recruits 1978 - (LY-1)
   rec_F<-as.numeric(data$natage[,(13+RecAge)][data$natage$Yr<=LY&data$natage$Yr>=FY&data$natage$Sex==1&data$natage$"Beg/Mid"=="B"&data$natage$Area==area&data$natage$Bio_Pattern==GrowthMorph])
   rec_M<-as.numeric(data$natage[,(13+RecAge)][data$natage$Yr<=LY&data$natage$Yr>=FY&data$natage$Sex==2&data$natage$"Beg/Mid"=="B"&data$natage$Area==area&data$natage$Bio_Pattern==GrowthMorph])
-  Rec_1 <- rec_F + rec_M
+
+    Rec_1 <- (rec_F + rec_M)/2 #changed to accommodate new version of spm.tpl that multiplies recruitment by 2 for 2-sex models only, where it did not used to.
+
   N_rec<-length(Rec_1)
 
   #SSB<-as.numeric(data$sprseries$SPB[data$natage$Yr<=LY&data$sprseries$Yr>=FY])
