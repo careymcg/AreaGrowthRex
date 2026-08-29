@@ -30,8 +30,8 @@ plot_timeseries<-function(data.t,xlabel,ylabel,showlegend,color_option = "viridi
 
   tsplot<-ggplot2::ggplot(data = data.t,aes(x = as.numeric(Year),y=Value)) +
     geom_line(aes(color = factor(Model)),linewidth = 1.2,alpha = 1) +
-    geom_ribbon(aes(ymin = lb,ymax = ub,fill = factor(Model)),alpha =0.2,show.legend = FALSE) +
     coord_cartesian(ylim = c(0, NA)) +
+    geom_ribbon(aes(ymin = lb,ymax = ub,fill = factor(Model)),alpha =0.2,show.legend = FALSE) +
     labs(x=xlabel,y = ylabel,color = "Model") +
     scale_color_viridis_d(aesthetics = c("colour","fill"), option = color_option,direction = color_direction) +
     if (showlegend == "none") {
