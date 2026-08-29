@@ -14,7 +14,17 @@ plot_timeseries(
 )
 }
 \arguments{
-\item{showlegend}{}
+\item{data.t}{time series data as a data frame or tibble with Year and Value columns}
+
+\item{xlabel}{the label for the x axis}
+
+\item{ylabel}{the label for the y axis}
+
+\item{showlegend}{true or false}
+
+\item{color_option}{used within scale_color_viridis_d for changing the color theme}
+
+\item{color_direction}{switch when needed to show the data better}
 }
 \description{
 Plot time-series results from multiple Stock Synthesis 3 assessment models with uncertainty
