@@ -104,7 +104,7 @@ plot_comps_twoarea <- function(ssruns, narea, mnames,comptype = "length", savepl
   #combo: one mname at a time but on the same plots
   trylist_2<-list()
   for (iarea in 1:narea) {
-    if (narea == 2 & iarea==2) {
+    if (narea == 2 & iarea==2 & comptype == "age") {
       print("no age compositions for the Eastern GOA")
     } else {
       one5a.t<-one5.t %>% filter(Area==iarea)
