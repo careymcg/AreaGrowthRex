@@ -120,7 +120,7 @@ plot_comps_twoarea <- function(ssruns, narea, mnames,comptype = "length", savepl
       lcombo<-lcombo + geom_line(data = one5a.t,aes(x = as.numeric( Bin), y =  Exp, color =  mname),linewidth = 1.2) +
         scale_fill_brewer(palette = "Accent") +
         labs(x = binlabel, y = "Proportion",color = "Model")
-      if (iarea==2 & Fleet == 1) {
+      if (iarea==2) {
         lcombo<-lcombo + facet_grid(~ Sex, labeller = labeller(Sex = sex.labs))
         print ("Reminder: no fishery data in the Eastern GOA")
       } else {
